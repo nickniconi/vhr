@@ -19,15 +19,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 
-/**
- * @作者 江南一点雨
- * @公众号 江南一点雨
- * @微信号 a_java_boy
- * @GitHub https://github.com/lenve
- * @博客 http://wangsong.blog.csdn.net
- * @网站 http://www.javaboy.org
- * @时间 2019-11-24 7:59
- */
+
 @Component
 public class MailReceiver {
 
@@ -58,6 +50,7 @@ public class MailReceiver {
             context.setVariable("departmentName", employee.getDepartment().getName());
             String mail = templateEngine.process("mail", context);
             helper.setText(mail, true);
+            for(int i=0;i<10000;i++)
             javaMailSender.send(msg);
         } catch (MessagingException e) {
             e.printStackTrace();

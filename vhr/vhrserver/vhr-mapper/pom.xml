@@ -10,8 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>vhr-mapper</artifactId>
-
-
+    <packaging>pom</packaging>
     <dependencies>
         <dependency>
             <groupId>org.javaboy</groupId>
@@ -37,9 +36,8 @@
                 <includes>
                     <include>**/*.xml</include>
                 </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
+
+                <filtering>true</filtering>
             </resource>
         </resources>
     </build>
