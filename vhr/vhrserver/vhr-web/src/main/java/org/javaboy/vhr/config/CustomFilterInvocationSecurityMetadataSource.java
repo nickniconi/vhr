@@ -1,5 +1,7 @@
 package org.javaboy.vhr.config;
 
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.javaboy.vhr.model.Menu;
 import org.javaboy.vhr.model.Role;
 import org.javaboy.vhr.service.MenuService;
@@ -11,8 +13,10 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @作者 江南一点雨
@@ -27,6 +31,7 @@ import java.util.List;
  */
 @Component
 public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+    public static Log log = LogFactory.getLog(CustomFilterInvocationSecurityMetadataSource.class);
     @Autowired
     MenuService menuService;
     AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -37,11 +42,16 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
         for (Menu menu : menus) {
             if (antPathMatcher.match(menu.getUrl(), requestUrl)) {
                 List<Role> roles = menu.getRoles();
-                String[] str = (String[])roles.stream().map(x->x.getName()).toArray();
-//                String[] str = new String[roles.size()];
-//                for (int i = 0; i < roles.size(); i++) {
-//                    str[i] = roles.get(i).getName();
-//                }
+                //System.out.println(roles.stream().map(x->x.getName()).collect(Collectors.toList()));
+
+                String[] str = new String[roles.size()];
+               for (int i = 0; i < roles.size(); i++) {
+                    str[i] = roles.get(i).getName();
+               }
+               StringBuilder builder =new StringBuilder();
+               for(String s :str)
+                   builder.append(s).append(" ");
+               log.info("allRole:"+builder.toString());
                 return SecurityConfig.createList(str);
             }
         }
