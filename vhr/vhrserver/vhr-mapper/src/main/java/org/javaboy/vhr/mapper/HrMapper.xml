@@ -22,7 +22,7 @@
     </resultMap>
     <sql id="Base_Column_List">
     id, name, phone, telephone, address, enabled, username, password, userface, remark
-  </sql>
+    </sql>
     <select id="getAllHrsExceptCurrentHr" resultMap="BaseResultMap">
         select * from hr where id !=#{id};
     </select>
@@ -37,7 +37,7 @@
     </select>
     <select id="getHrRolesById" resultType="org.javaboy.vhr.model.Role">
     select r.* from role r,hr_role hrr where hrr.`rid`=r.`id` and hrr.`hrid`=#{id}
-  </select>
+    </select>
     <select id="loadUserByUsername" resultMap="BaseResultMap">
     select * from hr where username=#{username}
   </select>
